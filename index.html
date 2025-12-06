@@ -1,114 +1,130 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>الاختبار</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة الانتظار</title>
 
-<style>
-    body {
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        background: radial-gradient(circle, #0a0f17, #000000);
-        color: #e6e6e6;
-        text-align: center;
-        padding-top: 60px;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0c0c0c;
+            color: #00ff99;
+            font-family: Tahoma, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            padding: 20px 10px;
+        }
 
-    h2, p {
-        margin: 10px 20px;
-    }
+        h1 {
+            font-size: 1.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
 
-    .countdown-container {
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
+        .countdown {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: nowrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 350px;
+        }
 
-    .unit {
-        background: rgba(0, 255, 170, 0.08);
-        padding: 20px;
-        width: 120px;
-        border-radius: 12px;
-        border: 2px solid #00ffaa33;
-        box-shadow: 0 0 12px #00ffcc44;
-        backdrop-filter: blur(5px);
-    }
+        .box {
+            background: #000;
+            border: 3px solid #00ff99;
+            border-radius: 12px;
+            padding: 10px 0;
+            width: 33%;
+            box-shadow: 0 0 14px #00ff99;
+        }
 
-    .number {
-        font-size: 40px;
-        font-weight: bold;
-        color: #00ffcc;
-        text-shadow: 0 0 10px #00ffaa;
-        font-family: "Digital-7", monospace;
-    }
+        .num {
+            font-size: 2.8rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff99;
+            text-shadow: 0 0 12px #00ff99;
+        }
 
-    .label {
-        margin-top: 5px;
-        font-size: 16px;
-        color: #7ef2d3;
-    }
+        .label {
+            margin-top: 4px;
+            font-size: 1.1rem;
+        }
 
-    /* خطوط رقمية */
-    @font-face {
-        font-family: "Digital-7";
-        src: local("Digital-7"), url("https://fonts.cdnfonts.com/s/17874/Digital7.woff") format("woff");
-    }
-
-</style>
+        /* تحسين الظهور على الهواتف الصغيرة جداً */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .num {
+                font-size: 2.2rem;
+            }
+            .label {
+                font-size: 1rem;
+            }
+            .box {
+                padding: 8px 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>الاختبار مبرمج يوم 9 ديسمبر 2025</h2>
-<p>سيتم نشر التصحيح النموذجي وسلّم التنقيط مباشرة بعد انتهاء الامتحان يوم 9 ديسمبر على الساعة 12:00.</p>
+    <h1>
+        الاختبار مبرمج يوم 9 ديسمبر 2025<br>
+        سيتم نشر التصحيح النموذجي وسلّم التنقيط<br>
+     على الساعة 10:00
+    </h1>
 
-<div class="countdown-container">
-    <div class="unit">
-        <div class="number" id="days">0</div>
-        <div class="label">الأيام</div>
+    <div class="countdown">
+        <div class="box">
+            <div id="hours" class="num">00</div>
+            <div class="label">ساعات</div>
+        </div>
+
+        <div class="box">
+            <div id="minutes" class="num">00</div>
+            <div class="label">دقائق</div>
+        </div>
+
+        <div class="box">
+            <div id="seconds" class="num">00</div>
+            <div class="label">ثواني</div>
+        </div>
     </div>
 
-    <div class="unit">
-        <div class="number" id="hours">0</div>
-        <div class="label">الساعات</div>
-    </div>
+    <script>
+       const targetTime = new Date(2025, 11, 9, 10, 00, 0).getTime();
 
-    <div class="unit">
-        <div class="number" id="minutes">0</div>
-        <div class="label">الدقائق</div>
-    </div>
 
-    <div class="unit">
-        <div class="number" id="seconds">0</div>
-        <div class="label">الثواني</div>
-    </div>
-</div>
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetTime - now;
 
-<script>
-// موعد النشر: 9 ديسمبر 2025 على الساعة 12:00
-const targetDate = new Date("2025-12-09T12:00:00").getTime();
+            if (diff <= 0) {
+                clearInterval(timer);
+                window.location.href = "solution.html";
+            }
 
-const timer = setInterval(() => {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
+            const h = Math.floor(diff / (1000 * 60 * 60));
 
-    if (diff <= 0) {
-        clearInterval(timer);
-        window.location.href = "solution.html";
-    }
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            const s = Math.floor((diff / 1000) % 60);
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("hours").textContent = String(h).padStart(2, "0");
+            document.getElementById("minutes").textContent = String(m).padStart(2, "0");
+            document.getElementById("seconds").textContent = String(s).padStart(2, "0");
 
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
-}, 1000);
-</script>
+        }, 1000);
+    </script>
 
 </body>
 </html>
